@@ -1,6 +1,5 @@
 # https://medium.com/quick-code/absolute-beginners-guide-to-slaying-apis-using-python-7b380dc82236
 # https://pynative.com/parse-json-response-using-python-requests-library/
-
 import requests
 from requests.structures import CaseInsensitiveDict
 from requests.exceptions import HTTPError
