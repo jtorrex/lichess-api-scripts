@@ -1,3 +1,4 @@
+# https://pynative.com/python-parse-multiple-json-objects-from-file/
 # https://medium.com/quick-code/absolute-beginners-guide-to-slaying-apis-using-python-7b380dc82236
 # https://pynative.com/parse-json-response-using-python-requests-library/
 
@@ -11,11 +12,9 @@ headers["Accept"] = "application/x-ndjson"
 headers["Content-Type"] = "application/x-ndjson"
 data = '{"Content-type":"application/x-ndjson"}'
 
-white_url = 'https://lichess.org/api/games/user/jtorrex?color=white&rated=true&tags=true&clocks=false&evals=false&opening=false&perfType=blitz&pgnInJson=true&max=2'
-
-# Program to write to text file using write() function
-
 try:
+
+    white_url = 'https://lichess.org/api/games/user/jtorrex?color=white&rated=true&tags=true&clocks=false&evals=false&opening=false&perfType=blitz&pgnInJson=true&max=2'
 
     # Make the request to the Lichess API
     response_white_games = requests.get(white_url,headers=headers)
@@ -36,32 +35,21 @@ try:
 
     # Print each JSON decoded Object
     for game in white_games_list:
-        print(game["winner"],game["pgn"])
+        if game["winner"] == "black":
+            print("https://lichess.org/"+game["id"]+"\n")
 
-
-    # JSONize the result of the request and store it in a new variable
-    #white_games_json = response_white_games.json()
-
-
-    #print("Print each key-value pair from JSON response")
-    #for key, value in white_games_json.items():
-    #    print(key, ":", value)
-
-    #print("Printing atomic keys from white games JSON")
-    #white_games = []
-    #for line in open('white_games_json','r'):
-    #    white_games.append(json.loads(line))
-    #print(white_games_json["winner"])
-    #print(white_games_json["pgn"])
+        else:
+            print("https://lichess.org/"+game["id"]+"\n")
 
 except HTTPError as http_err:
     print(f'HTTP error occurred: {http_err}')
 except Exception as err:
     print(f'Other error occurred: {err}')
 
-black_url = 'https://lichess.org/api/games/user/jtorrex?color=black&rated=true&tags=true&clocks=false&evals=false&opening=false&perfType=blitz&pgnInJson=true&max=2'
 
 try:
+
+    black_url = 'https://lichess.org/api/games/user/jtorrex?color=black&rated=true&tags=true&clocks=false&evals=false&opening=false&perfType=blitz&pgnInJson=true&max=2'
 
     # Make the request to the Lichess API
     response_black_games = requests.get(black_url,headers=headers)
@@ -82,18 +70,10 @@ try:
 
     # Print each JSON decoded Object
     for game in black_games_list:
-        print(game["winner"],game["pgn"])
-
-    #print("Print each key-value pair from JSON response:")
-    #for key, value in black_games_json.items():
-    #    print(key, ":", value)
-
-    #print("Printing atomic keys from black games JSON:")
-    #black_games = []
-    #for line in open('black_games_json','r'):
-    #    black_games.append(json.loads(line))
-       # print(black_games_json["winner"])
-       # print(black_games_json["pgn"])
+        if game["winner"] == "white":
+            print("https://lichess.org/"+game["id"]+"\n")
+        else:
+            print("https://lichess.org/"+game["id"]+"\n")
 
 except HTTPError as http_err:
     print(f'HTTP error occurred: {http_err}')
